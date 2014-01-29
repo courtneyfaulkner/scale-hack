@@ -83,7 +83,12 @@ exports.create = function(req, res, next) {
  * Send User
  */
 exports.me = function(req, res) {
-    res.jsonp(req.user || null);
+    if (!req.user) res.jsonp(null);
+    if (req.method === 'PUT') {
+        req.user.set(req.body);
+        req.user.save();
+    }
+    res.jsonp(req.user);
 };
 
 /**

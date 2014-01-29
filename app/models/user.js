@@ -17,9 +17,22 @@ var UserSchema = new Schema({
         type: String,
         unique: true
     },
+    address: {
+        address1: {type: String, trim:true},
+        address2: {type: String, trim:true},
+        city: {type: String, trim:true},
+        state: {type: String, trim:true},
+        zip: {type: String, trim:true}
+    },
+    phone: {type: String, trim:true},
+    shortBio: {type: String, trim:true},
+    longBio: {type: String, trim:true},
+    activities: [{type: String, trim:true}],
+    interests: [{type: String, trim:true}],
+    website: {type: String, trim:true},
     hashed_password: String,
-    provider: String,
     salt: String,
+    provider: String,
     facebook: {},
     twitter: {},
     github: {},
