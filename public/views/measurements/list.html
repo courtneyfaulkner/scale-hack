@@ -1,0 +1,26 @@
+<section data-ng-controller="MeasurementsController" data-ng-init="find()">
+    <form class="form-horizontal col-md-6" role="form" name="form">
+        <ul class="measurement unstyled">
+            <li>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <input type="text" date data-ng-model="newMeasurement.date" data-ng-blur="create()"/>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" data-ng-model="newMeasurement.weight" data-ng-blur="create()" />
+                    </div>
+                </div>
+            </li>
+            <li data-ng-repeat="measurement in measurements">
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <input type="text" date data-ng-model="measurement.date" data-ng-blur="!form.$dirty || update(measurement)"/>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" data-ng-model="measurement.weight" data-ng-blur="!form.$dirty || update(measurement)" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </form>
+</section>
