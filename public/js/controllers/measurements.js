@@ -39,8 +39,10 @@ angular.module('mean.measurements').controller('MeasurementsController', ['$scop
 
         $scope.update = function(measurement) {
             
-            measurement.$update(function() {
-                //$location.path('measurements/' + measurement._id);
+            measurement.$update(function(m) {
+                if (m.replaced) {
+                    $scope.find();
+                }
             });
         
         };
