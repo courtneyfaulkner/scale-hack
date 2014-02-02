@@ -26,16 +26,16 @@ var findByKey = function(key, callback) {
     process.nextTick(function() {
         Measurement.findOne({user: key.user, date: key.date}, function(err, measurement) {
             callback(err, measurement);
-        })
-    })
-}
+        });
+    });
+};
 
 /**
  * Create a article
  */
 exports.create = function(req, res) {
     process.nextTick(function() {
-        var save = function() { 
+        var save = function() {
             measurement.save(function(err) {
                 if (err) {
                     return res.send('users/signup', {
@@ -46,7 +46,7 @@ exports.create = function(req, res) {
                     res.jsonp(measurement);
                 }
             });
-        }
+        };
         var measurement = new Measurement(req.body);
         measurement.user = req.user;
         findByKey(measurement, function(err, found) {
@@ -55,14 +55,14 @@ exports.create = function(req, res) {
             }
             save();
 
-        })
+        });
         
     });
 };
 
 var update = function(req, res) {
     process.nextTick(function() {
-        var save = function(replaced) { 
+        var save = function(replaced) {
             measurement.save(function(err) {
                 if (err) {
                     return res.send('users/signup', {
@@ -70,7 +70,7 @@ var update = function(req, res) {
                         measurement: measurement
                     });
                 } else {
-                    console.log("Measurement replaced = " + replaced);
+                    console.log('Measurement replaced = ' + replaced);
                     res.jsonp(_.extend({replaced:replaced}, req.body));
                 }
             });
@@ -78,15 +78,15 @@ var update = function(req, res) {
         var measurement = req.measurement;
         measurement = _.extend(measurement, req.body);
         findByKey(measurement, function(err, found) {
-            if (found && found.id != measurement.id) {
+            if (found && found.id !== measurement.id) {
                 process.nextTick(function() {
                     found.remove();
-                    process.nextTick(function() { save(true) });
+                    process.nextTick(function() { save(true); });
                 });
             } else {
-                process.nextTick(function() { save(false) });
+                process.nextTick(function() { save(false); });
             }
-        })
+        });
 
     });
 };
@@ -96,7 +96,6 @@ var update = function(req, res) {
 exports.update = update;
 
 
-var destroy = 
 /**
  * Delete an article
  */
