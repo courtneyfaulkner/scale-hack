@@ -24,19 +24,8 @@ angular.module('mean.measurements').controller('MeasurementsController', ['$scop
         };
 
         $scope.remove = function(measurement) {
-            if (measurement) {
-                measurement.$remove();
-
-                for (var i in $scope.measurements) {
-                    if ($scope.measurements[i] === measurement) {
-                        $scope.measurements.splice(i, 1);
-                    }
-                }
-            }
-            else {
-                $scope.measurement.$remove();
-                $location.path('measurements');
-            }
+            measurement.$remove();
+            $scope.measurements.remove(measurement);
         };
 
         $scope.update = function(newMeasurement, originalMeasurement, replacedMeasurement) {
@@ -102,6 +91,9 @@ angular.module('mean.measurements').controller('MeasurementsController', ['$scop
             } else if ($scope.measurement.date === $scope.originalMeasurement.date) {
                 $scope.$parent.update($scope.measurement);
             }
+        };
+        $scope.remove = function() {
+            $scope.$parent.remove($scope.measurement);
         };
         $scope.cancel = function() {
             $scope.init($scope.originalMeasurement);
