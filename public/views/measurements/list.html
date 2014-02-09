@@ -2,15 +2,42 @@
     <div class="form-horizontal col-md-4">
         <table  class="table table-striped table-bordered table-condensed">
             <tr><th>Date</th><th>Weight</th></tr>
-            <tr data-ng-controller="MeasurementController" data-ng-form role="form" name="form">
-                <td><input type="text" date data-ng-model="measurement.date" data-ng-blur="create()" placeholder="MM/DD/YYYY"/></td>
-                <td><input type="text" data-ng-model="measurement.weight" data-ng-blur="create()" placeholder="Weight (lbs)"/></td>
-            </tr>
-            <tr data-ng-repeat="m in measurements.asArray()" data-ng-form role="form" name="form" data-ng-controller="MeasurementController" 
+            <tbody data-ng-controller="MeasurementController" data-ng-form role="form" name="form">
+                <tr>
+                    <td colspan="2" data-ng-show="duplicate">
+                        <alert type="danger">
+                            Duplicate 
+                            <span class="btn-group pull-right">
+                                <button data-ng-click="create(true)" type="button" class="btn btn-warning">Ok</button>
+                                <button data-ng-click="cancel()" type="button" class="btn btn-primary">Cancel</button>
+                            </span>
+                        </alert>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="text" date data-ng-model="measurement.date" data-ng-blur="create()" placeholder="MM/DD/YYYY"/></td>
+                    <td><input type="text" data-ng-model="measurement.weight" data-ng-blur="create()" placeholder="Weight (lbs)"/></td>
+                </tr>
+            </tbody>
+            <tbody data-ng-repeat="m in measurements.asArray()" data-ng-form role="form" name="form" data-ng-controller="MeasurementController" 
                 data-ng-init="init(m)">
-                <td><input type="text" date data-ng-model="measurement.date" data-ng-blur="update()" placeholder="MM/DD/YYYY"/></td>
-                <td><input type="text" data-ng-model="measurement.weight" data-ng-blur="update()" placeholder="Weight (lbs)"/></td>
-            </tr>
+
+                <tr>
+                    <td colspan="2" data-ng-show="duplicate">
+                        <alert type="danger">
+                            Duplicate 
+                            <span class="btn-group pull-right">
+                                <button data-ng-click="update(true)" class="btn btn-warning">Ok</button>
+                                <button data-ng-click="cancel()" class="btn btn-primary">Cancel</button>
+                            </span>
+                        </alert>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="text" date data-ng-model="measurement.date" data-ng-blur="update()" placeholder="MM/DD/YYYY"/></td>
+                    <td><input type="text" data-ng-model="measurement.weight" data-ng-blur="update()" placeholder="Weight (lbs)"/></td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </section>

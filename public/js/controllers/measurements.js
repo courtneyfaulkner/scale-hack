@@ -74,27 +74,47 @@ angular.module('mean.measurements').controller('MeasurementsController', ['$scop
         };
     }]).controller('MeasurementController', ['$scope', 'Measurements', function($scope, Measurements) {
         $scope.measurement = new Measurements();
-        $scope.create = function() {
+        var duplicateCheck = function(overwrite, callback) {
+            var replacedMeasurement = $scope.measurements.find($scope.measurement);
+            if (replacedMeasurement && !overwrite) {
+                $scope.duplicate = true;
+            } else {
+                $scope.duplicate = false;
+                callback(replacedMeasurement);
+            }
+        };
+        $scope.create = function(overwrite) {
             if (!$scope.measurement.date || !$scope.measurement.weight) {
                 return;
             }
-            $scope.$parent.create($scope.measurement,$scope.measurements.find($scope.measurement) );
-            $scope.measurement = new Measurements();
-            
+            duplicateCheck(overwrite,function(replacedMeasurement) {
+                $scope.$parent.create($scope.measurement,replacedMeasurement);
+                $scope.measurement = new Measurements();
+            });
         };
-        $scope.update = function() {
+        $scope.update = function(overwrite) {
             if ($scope.form.$pristine || !$scope.measurement.date || !$scope.measurement.weight) {
                 return;
             } else if ($scope.measurement.date !== $scope.originalMeasurement.date) {
-                $scope.$parent.update( $scope.measurement, $scope.originalMeasurement, $scope.measurements.find($scope.measurement));
+                duplicateCheck(overwrite, function(replacedMeasurement) {
+                    $scope.$parent.update( $scope.measurement, $scope.originalMeasurement, replacedMeasurement);
+                });
             } else if ($scope.measurement.date === $scope.originalMeasurement.date) {
                 $scope.$parent.update($scope.measurement);
             }
         };
+        $scope.cancel = function() {
+            $scope.init($scope.originalMeasurement);
+            $scope.duplicate = false;
+        };
         $scope.init = function(measurement) {
-            $scope.measurement.date = measurement.date;
-            $scope.measurement.weight = measurement.weight;
-            $scope.measurement._id = measurement._id;
-            $scope.originalMeasurement = measurement;
+            if (measurement) {
+                $scope.measurement.date = measurement.date;
+                $scope.measurement.weight = measurement.weight;
+                $scope.measurement._id = measurement._id;
+                $scope.originalMeasurement = measurement;
+            } else {
+                $scope.measurement = new Measurements();
+            }
         };
     }]);
