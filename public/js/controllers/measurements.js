@@ -87,9 +87,11 @@ angular.module('mean.measurements').controller('MeasurementsController', ['$scop
             } else if ($scope.measurement.date !== $scope.originalMeasurement.date) {
                 duplicateCheck(overwrite, function(replacedMeasurement) {
                     $scope.$parent.update( $scope.measurement, $scope.originalMeasurement, replacedMeasurement);
+                    $scope.form.$setPristine(true);
                 });
             } else if ($scope.measurement.date === $scope.originalMeasurement.date) {
                 $scope.$parent.update($scope.measurement);
+                $scope.form.$setPristine(true);
             }
         };
         $scope.remove = function() {
