@@ -28,6 +28,9 @@ angular.module('mean').config(['$routeProvider',
         // when('/measurements/:measurementId', {
         //     templateUrl: 'views/measurements/view.html'
         // }).
+        when('/chart', {
+            templateUrl: 'views/chart/view.html'
+        }).
         when('/', {
             templateUrl: 'views/index.html'
         }).

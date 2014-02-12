@@ -8,3 +8,6 @@ test/coverage/
 .bower-registry
 *.sublime-project
 *.sublime-workspace
+.idea
+*.iml
+data

@@ -1,15 +1,17 @@
 {
-    "name": "mean",
-    "version": "0.1.3",
-    "dependencies": {
-        "angular": "1.2.10",
-        "angular-resource": "latest",
-        "angular-cookies": "latest",
-        "angular-mocks": "latest",
-        "angular-route": "latest",
-        "bootstrap": "3.0.3",
-        "angular-bootstrap": "0.10.0",
-        "angular-ui-utils": "0.1.0",
-        "bintrees" : "http://github.com/loosebits/js_bintrees.git"
-    }
+  "name": "mean",
+  "version": "0.1.3",
+  "dependencies": {
+    "angular": "1.2.10",
+    "angular-resource": "latest",
+    "angular-cookies": "latest",
+    "angular-mocks": "latest",
+    "angular-route": "latest",
+    "bootstrap": "3.0.3",
+    "angular-bootstrap": "0.10.0",
+    "angular-ui-utils": "0.1.0",
+    "bintrees": "http://github.com/loosebits/js_bintrees.git",
+    "d3": "~3.4.1",
+    "prototype.js": "~1.7.1"
+  }
 }
