@@ -37,13 +37,11 @@ angular.module('mean.directives')
     .directive('weightChart', ['d3Service', function(d3Service) {
         return {
             restrict: 'A',
-            scope: {val: '='},
-            controller: function($scope, $element) {
-                $element.append($scope.name);
-            },
-            link: function(scope, element) {
+            
+            link: function(scope, element, attrs) {
                 d3Service.d3().then(function(d3) {
-                    var data = scope.val;
+                    // var data = scope.val.asArray();
+
                     var margin = {top: 20, right: 20, bottom: 30, left: 40},
                         width = 960 - margin.left - margin.right,
                         height = 500 - margin.top - margin.bottom;
@@ -68,22 +66,14 @@ angular.module('mean.directives')
                         .x(function(d) { return x(d.date); })
                         .y(function(d) { return y(d.weight); });
 
-                    var svg = d3.select(element).append('svg')
+                    var svg = d3.select(element[0]).append('svg')
                         .attr('width', width + margin.left + margin.right)
                         .attr('height', height + margin.top + margin.bottom)
                         .append('g')
                         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-                    data.forEach(function(d) {
-                        d.date = format(new Date(d.date));
-                        d.weight = +d.weight;
-                    });
-
-                    x.domain(d3.extent(data, function(d) { return d.date; }));
-                    y.domain(d3.extent(data, function(d) { return d.weight; }));
-
-                    svg.append('g')
-                        .attr('class', 'x axis')
+                    
+                    svg.append('g').attr('class', 'x axis')
                         .attr('transform', 'translate(0,' + height + ')')
                         .call(xAxis);
 
@@ -96,14 +86,26 @@ angular.module('mean.directives')
                         .attr('dy', '.71em')
                         .style('text-anchor', 'end')
                         .text('weight');
-
-                    svg.append('path')
-                        .datum(data)
-                        .attr('class', 'line')
-                        .attr('d', line);
-
-
+                    var path = svg.append('path')
+                        .attr('class', 'line');
+                    scope.$watch(attrs.chartData, function(val) {
+                        if (!val) return;
+                        var data = [];
+                        angular.forEach(val.asArray(),function(d) {
+                            var datum = {};
+                            //datum.date = format(new Date(d.date));
+                            datum.date = new Date(d.date);
+                            datum.weight = d.weight;
+                            data.push(datum);
+                        });
+                        x.domain(d3.extent(data, function(d) { return d.date; }));
+                        y.domain(d3.extent(data, function(d) { return d.weight; }));
+                        path.datum(data).attr('d',line);
+                    });
                 });
+                
+
+
             }
         };
     }]);
