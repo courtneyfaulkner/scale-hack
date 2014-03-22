@@ -11,3 +11,5 @@ test/coverage/
 .idea
 *.iml
 data
+npm-debug.log
+
